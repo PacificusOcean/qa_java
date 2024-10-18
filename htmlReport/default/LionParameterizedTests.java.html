@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LionParameterizedTests.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">LionParameterizedTests.java</span></div><h1>LionParameterizedTests.java</h1><pre class="source lang-java linenums">import com.example.Lion;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
+import com.example.Feline;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+<span class="fc" id="L15">public class LionParameterizedTests {</span>
+    private static Stream&lt;Arguments&gt; provideSexAndMane() {
+<span class="fc" id="L17">        return Stream.of(</span>
+<span class="fc" id="L18">                Arguments.of(&quot;Самец&quot;, true),</span>
+<span class="fc" id="L19">                Arguments.of(&quot;Самка&quot;, false)</span>
+        );
+    }
+
+
+    @ParameterizedTest
+    @MethodSource(&quot;provideSexAndMane&quot;)
+
+
+
+    void testConstructor(String sex, boolean expectedMane) throws Exception {
+<span class="fc" id="L30">        Feline mockFeline = Mockito.mock(Feline.class);</span>
+<span class="fc" id="L31">        Lion lion = new Lion(sex, mockFeline);</span>
+<span class="fc" id="L32">        assertEquals(expectedMane, lion.doesHaveMane());</span>
+<span class="fc" id="L33">    }</span>
+
+    @Test
+    void testConstructor_InvalidSex() {
+<span class="fc" id="L37">        Feline mockFeline = Mockito.mock(Feline.class);</span>
+<span class="pc" id="L38">        Exception exception = assertThrows(Exception.class, () -&gt; new Lion(&quot;Неправильный пол&quot;, mockFeline));</span>
+<span class="fc" id="L39">        assertEquals(&quot;Используйте допустимые значения пола животного - самец или самка&quot;, exception.getMessage());</span>
+<span class="fc" id="L40">    }</span>
+
+    @Test
+    void testGetKittens() throws Exception {
+<span class="fc" id="L44">        Feline mockFeline = Mockito.mock(Feline.class);</span>
+<span class="fc" id="L45">        Mockito.when(mockFeline.getKittens()).thenReturn(3);</span>
+<span class="fc" id="L46">        Lion lion = new Lion(&quot;Самец&quot;, mockFeline);</span>
+<span class="fc" id="L47">        assertEquals(1, lion.getKittens());</span>
+<span class="fc" id="L48">    }</span>
+
+    @Test
+    void testGetFood() throws Exception {
+<span class="fc" id="L52">        Feline mockFeline = Mockito.mock(Feline.class);</span>
+<span class="fc" id="L53">        Mockito.when(mockFeline.getFood(&quot;Хищник&quot;)).thenReturn(Arrays.asList(&quot;Зебра&quot;, &quot;Антилопа&quot;));</span>
+<span class="fc" id="L54">        Lion lion = new Lion(&quot;Самец&quot;, mockFeline);</span>
+<span class="fc" id="L55">        List&lt;String&gt; food = lion.getFood(&quot;Хищник&quot;);</span>
+<span class="fc" id="L56">        assertEquals(4, food.size());</span>
+<span class="fc" id="L57">        assertTrue(food.contains(&quot;Животные&quot;));</span>
+<span class="fc" id="L58">        assertTrue(food.contains(&quot;Птицы&quot;));</span>
+<span class="fc" id="L59">        assertTrue(food.contains(&quot;Рыба&quot;));</span>
+<span class="fc" id="L60">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
