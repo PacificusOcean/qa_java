@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CatTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">CatTest.java</span></div><h1>CatTest.java</h1><pre class="source lang-java linenums">import org.junit.Assert;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+import com.example.Cat;
+import com.example.Feline;
+import java.util.Arrays;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@RunWith(MockitoJUnitRunner.class)
+
+<span class="nc" id="L16">public class CatTest {</span>
+
+    @Mock
+    Feline mockFeline;
+
+    @Test
+    public void getSoundTest() {
+<span class="nc" id="L23">        Cat cat = new Cat(mockFeline);</span>
+<span class="nc" id="L24">        Assert.assertEquals(&quot;Мяу&quot;, cat.getSound());</span>
+<span class="nc" id="L25">    }</span>
+
+    @Test
+    public void getFoodTest() throws Exception {
+<span class="nc" id="L29">        Cat cat = new Cat(mockFeline);</span>
+<span class="nc" id="L30">        List&lt;String&gt; expectedFood = Arrays.asList(&quot;Мясо&quot;, &quot;Рыба&quot;);</span>
+<span class="nc" id="L31">        Mockito.when(mockFeline.eatMeat()).thenReturn(expectedFood);</span>
+<span class="nc" id="L32">        Assert.assertEquals(expectedFood, cat.getFood());</span>
+<span class="nc" id="L33">    }</span>
+
+    @Test
+    public void testGetFoodThrowsException() throws Exception {
+<span class="nc" id="L37">        Cat cat = new Cat(mockFeline);</span>
+<span class="nc" id="L38">        Mockito.when(mockFeline.eatMeat()).thenThrow(new Exception(&quot;Ошибка&quot;));</span>
+<span class="nc" id="L39">        assertThrows(Exception.class, cat::getFood, &quot;Метод getFood должен выбросить исключение&quot;);</span>
+<span class="nc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

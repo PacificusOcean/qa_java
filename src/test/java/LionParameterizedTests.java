@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LionTestParameterized {
+public class LionParameterizedTests {
     private static Stream<Arguments> provideSexAndMane() {
         return Stream.of(
                 Arguments.of("Самец", true),
@@ -20,8 +20,12 @@ public class LionTestParameterized {
         );
     }
 
+
     @ParameterizedTest
     @MethodSource("provideSexAndMane")
+
+
+
     void testConstructor(String sex, boolean expectedMane) throws Exception {
         Feline mockFeline = Mockito.mock(Feline.class);
         Lion lion = new Lion(sex, mockFeline);
@@ -32,7 +36,7 @@ public class LionTestParameterized {
     void testConstructor_InvalidSex() {
         Feline mockFeline = Mockito.mock(Feline.class);
         Exception exception = assertThrows(Exception.class, () -> new Lion("Неправильный пол", mockFeline));
-        assertEquals("Используйте допустимые значения пола животного - самей или самка", exception.getMessage());
+        assertEquals("Используйте допустимые значения пола животного - самец или самка", exception.getMessage());
     }
 
     @Test
