@@ -1,4 +1,5 @@
 CatTest.class
 LionTest.class
+RunWith.class
 LionParameterizedTests.class
 FelineTest.class
